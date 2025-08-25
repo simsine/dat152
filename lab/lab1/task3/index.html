@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h1>Task 3</h1>
+	<input id="date" type="date">
+	<input id="locale" type="text" placeholder="Locale">
+	<button id="show">Show</button>
+	<span id="result"></span>
+</body>
+<script>
+	const dateInput = document.querySelector("#date")
+	const localeInput = document.querySelector("#locale")
+	const showButton = document.querySelector("#show")
+	const resultSpan = document.querySelector("#result")
+
+	showButton.addEventListener("click", () => {
+		const date = new Date(dateInput.value)
+		const locale = localeInput.value
+		resultSpan.textContent = "Day of the week: " + date.toLocaleString(locale, {
+			weekday: "long"
+		})
+	})
+</script>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h1>Task 1</h1>
+	<button id="push">Push</button>
+	<button id="pop">Pop</button>
+	<input id="text" type="text" placeholder="Input">
+	<ul id="list">
+		
+	</ul>
+</body>
+<script>
+	let stack = []
+
+	const pushButton = document.querySelector("#push")
+	const popButton = document.querySelector("#pop")
+	const textInput = document.querySelector("#text")
+	const listElement = document.querySelector("#list")
+
+	pushButton.addEventListener("click", () => {
+		if(textInput.value === "") {
+			return
+		}
+		stack.push(textInput.value)
+		textInput.value = ""
+		makeList()
+	})
+
+	popButton.addEventListener("click", () => {
+		stack.pop()
+		makeList()
+	})
+
+	const makeList = () => {
+		listElement.innerHTML = ""
+		for (let text of stack) {
+			let element = document.createElement("li")
+			element.innerText = text
+			listElement.appendChild(e)
+		}
+	}
+</script>
+</html>

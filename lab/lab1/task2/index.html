@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h1>Task 2</h1>
+	<input id="date1" type="date">
+	<input id="date2" type="date">
+	<button id="calculate">Calculate</button>
+	<br>
+	<span id="result"></span>
+</body>
+<script>
+	const date1Input = document.querySelector("#date1")
+	const date2Input = document.querySelector("#date2")
+	const calculateButton = document.querySelector("#calculate")
+	const resultSpan = document.querySelector("#result")
+
+	calculateButton.addEventListener("click", () => {
+		const date1 = new Date(date1Input.value)
+		const date2 = new Date(date2Input.value)
+		resultSpan.textContent = Math.abs(date1 - date2) / 1000 / 60 / 60 / 24 + " days"
+	})
+</script>
+</html>
