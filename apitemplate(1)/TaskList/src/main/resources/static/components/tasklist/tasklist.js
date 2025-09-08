@@ -97,18 +97,16 @@ class TaskList extends HTMLElement {
 		}
 		
 		selectElement.addEventListener("change", () => {
-			if (!window.confirm(`Do you wish to update the task '${task.title}' to `)) return;
+			if (!window.confirm(`Do you wish to update the task '${task.title}' to ${selectElement.value}`)) return;
 			
-			
-			
+			//TODO
 			//this.#onStatusChange(task.id);
 		});
 		
 		const removeButton = newTaskRow.querySelector("button");
 		removeButton.addEventListener("click", () => {
 			if (!window.confirm("Do you wish to delete this task?")) return;
-			this.removeTask(task.id);				
-			this.#deleteTaskCallback(task.id);
+			this.removeTask(task.id);
 		})
 		
         this.#taskList.querySelector("tbody").appendChild(newTaskRow);
@@ -119,9 +117,7 @@ class TaskList extends HTMLElement {
      * @param {Object} task - Object with attributes {'id':taskId,'status':newStatus}
      */
     updateTask(task) {
-        /**
-         * Fill inn the code
-         */
+ 		//TODO
     }
 
     /**
@@ -131,6 +127,7 @@ class TaskList extends HTMLElement {
     removeTask(id) {
 		const taskRow = this.#taskList.querySelector(`[data-id='${id}']`);
 		taskRow.remove();
+		this.#deleteTaskCallback(id);
     }
 
     /**

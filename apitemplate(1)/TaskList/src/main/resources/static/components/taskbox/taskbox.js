@@ -5,7 +5,7 @@ template.innerHTML = `
 		<!-- Modal content -->
 		<div>
 			<label for="title">Title:</label>
-			<input id="title" type="text" size="25" maxlength="80" placeholder="Task title" autofocus>
+			<input id="title" type="text" size="25" maxlength="80" placeholder="Task title" autofocus/>
 		</div>
 		<div>
 			<label for="status">Status:</label>
@@ -31,10 +31,23 @@ class TaskBox extends HTMLElement {
 		shadowRoot.appendChild(template.content.cloneNode(true));
 		
 		this.#modal = shadowRoot.querySelector("dialog");
+		
+		this.#statusesList = [];
 	}
 	
 	setStatusesList(list) {
 		this.#statusesList = list;
+		
+		const selectElement = this.#modal.querySelector("select");
+		
+		selectElement.innerHTML = "<option value='0' selected>&lt;Modify&gt;</option>";
+
+		for (let status of this.#statusesList) {
+			const newOption = document.createElement("option");
+			newOption.value = status;
+			newOption.innerText = status;
+			selectElement.appendChild(newOption);
+		}
 	}
 	
 	setNewTaskCallback(callback) {

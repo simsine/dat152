@@ -28,7 +28,6 @@ class TaskView extends HTMLElement {
 	#taskBox;
 	#messageDiv;
 	
-	
     constructor() {
         super();
 		this.#apiUrl = this.dataset.serviceurl;
@@ -44,15 +43,15 @@ class TaskView extends HTMLElement {
 		this.#fetchStatuses();
 
 		this.#taskList.changestatusCallback((id, newStatus) => {
-			console.log(`Status ${newStatus} for task ${id} approved`)
+			this.#putTask(id, newStatus);
+			console.log(`Status ${newStatus} for task ${id} approved`);
 		});
 		this.#taskList.deletetaskCallback((id) => {
-	        console.log(`Delete of task ${id} approved`)
+	        console.log(`Delete of task ${id} approved`);
 	    });
-		this.#taskBox.setStatusesList();
 		
 		this.#taskBox.show();
-		taskbox.setNewTaskCallback((task) => {
+		this.#taskBox.setNewTaskCallback((task) => {
 			console.log(`Have '${task.title}' with status ${task.status}.`);
 			taskbox.close();
 		});
@@ -64,6 +63,7 @@ class TaskView extends HTMLElement {
 		const json = await res.json();
 		if (!json.responseStatus) return;
 		const tasks = json.tasks;
+
 		this.#messageDiv.innerText = `Found ${tasks.length} tasks`;
 		for (let task of tasks) {
 			this.#taskList.showTask(task);
@@ -76,9 +76,41 @@ class TaskView extends HTMLElement {
 		const json = await res.json();
 		if (!json.responseStatus) return;
 		const statuses = json.allstatuses;
+
 		this.#taskList.setStatusesList(statuses);
 		this.#taskBox.setStatusesList(statuses);
 	}
+	
+	async #putTask(id, newStatus) {
+
+		const res = await fetch(this.#apiUrl + "/task/" + id, {
+			method: "PUT",
+			body: {
+				
+			}
+		});
+		if (!res.ok) return;
+		const json = await res.json();
+		if (!json.responseStatus) return;
+		const statuses = json.allstatuses;
+
+		this.#taskList.setStatusesList(statuses);
+		this.#taskBox.setStatusesList(statuses);
+	}
+	
+	async #deleteTask(id) {
+		const res = await fetch(this.#apiUrl + "/task/" + id, {
+			method: "DELETE",
+		});
+		if (!res.ok) return;
+		const json = await res.json();
+		if (!json.responseStatus) return;
+		const statuses = json.allstatuses;
+
+		this.#taskList.setStatusesList(statuses);
+		this.#taskBox.setStatusesList(statuses);
+	}
+	
 }
 
 customElements.define('task-view', TaskView);
